@@ -1,0 +1,14 @@
+/home/andrew/Programming Projects/C#/mis/obj/Debug/netcoreapp2.2/mis.csprojAssemblyReference.cache
+/home/andrew/Programming Projects/C#/mis/obj/Debug/netcoreapp2.2/mis.csproj.CoreCompileInputs.cache
+/home/andrew/Programming Projects/C#/mis/obj/Debug/netcoreapp2.2/mis.RazorAssemblyInfo.cache
+/home/andrew/Programming Projects/C#/mis/obj/Debug/netcoreapp2.2/mis.RazorAssemblyInfo.cs
+/home/andrew/Programming Projects/C#/mis/obj/Debug/netcoreapp2.2/mis.AssemblyInfoInputs.cache
+/home/andrew/Programming Projects/C#/mis/obj/Debug/netcoreapp2.2/mis.AssemblyInfo.cs
+/home/andrew/Programming Projects/C#/mis/bin/Debug/netcoreapp2.2/mis.deps.json
+/home/andrew/Programming Projects/C#/mis/bin/Debug/netcoreapp2.2/mis.runtimeconfig.json
+/home/andrew/Programming Projects/C#/mis/bin/Debug/netcoreapp2.2/mis.runtimeconfig.dev.json
+/home/andrew/Programming Projects/C#/mis/bin/Debug/netcoreapp2.2/mis.dll
+/home/andrew/Programming Projects/C#/mis/bin/Debug/netcoreapp2.2/mis.pdb
+/home/andrew/Programming Projects/C#/mis/obj/Debug/netcoreapp2.2/mis.RazorTargetAssemblyInfo.cache
+/home/andrew/Programming Projects/C#/mis/obj/Debug/netcoreapp2.2/mis.dll
+/home/andrew/Programming Projects/C#/mis/obj/Debug/netcoreapp2.2/mis.pdb
