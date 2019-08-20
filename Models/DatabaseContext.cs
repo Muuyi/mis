@@ -8,5 +8,6 @@ namespace mis.Models
 
         }
         public DbSet<Departments>Departments{get; set;}
+        public DbSet<Employees>Employees{get; set;}
     }
 }
