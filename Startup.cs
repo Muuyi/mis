@@ -22,14 +22,23 @@ namespace mis
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
+                public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //DATABASE CONNECTION
             services.AddDbContext<DatabaseContext>(options => options.UseMySql("server=localhost;port=3306;database=mis;user=root;password="));
+            //ENABLING CORS-CROSS ORIGIN RESOURCE SHARING
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder=>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +53,8 @@ namespace mis
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            // app.UseCors(options => options.WithOrigins("http://localhost:4200"));
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
             app.UseMvc();
         }
