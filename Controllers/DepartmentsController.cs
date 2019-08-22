@@ -33,13 +33,13 @@ namespace mis.Controllers
         {
             _context.Departments.Add(department);
             _context.SaveChanges();
-            return CreatedAtAction("GetDepartments", new Departments{id=department.id},department);
+            return CreatedAtAction("GetDepartments", new Departments{Id=department.Id},department);
         }
         //PUT DEPARTMENTS       api/departments/id
         [HttpPut("{id}")]
         public ActionResult PutDepartment(int id, Departments department)
         {
-            if(id != department.id)
+            if(id != department.Id)
             {
                 return BadRequest();
             }

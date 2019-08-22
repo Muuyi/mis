@@ -9,8 +9,8 @@ using mis.Models;
 namespace mis.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190820054259_Update employees")]
-    partial class Updateemployees
+    [Migration("20190822093353_UpdateDates")]
+    partial class UpdateDates
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,12 +21,14 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.Departments", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("department_name");
+                    b.Property<DateTime>("CreatedDate");
 
-                    b.HasKey("id");
+                    b.Property<string>("DepartmentName");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Departments");
                 });
@@ -36,7 +38,7 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<int>("DepartmentId");
 

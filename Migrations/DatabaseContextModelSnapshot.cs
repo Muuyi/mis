@@ -19,12 +19,14 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.Departments", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("department_name");
+                    b.Property<DateTime>("CreatedDate");
 
-                    b.HasKey("id");
+                    b.Property<string>("DepartmentName");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Departments");
                 });
@@ -34,7 +36,7 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<int>("DepartmentId");
 

@@ -8,8 +8,8 @@ using mis.Models;
 namespace mis.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190816143422_AddDepartment")]
-    partial class AddDepartment
+    [Migration("20190822092828_DepartmentsEmployees")]
+    partial class DepartmentsEmployees
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,14 +20,34 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.Departments", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("department_name");
+                    b.Property<string>("DepartmentName");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("mis.Models.Employees", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DepartmentId");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<int>("Phone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Employees");
                 });
 #pragma warning restore 612, 618
         }
