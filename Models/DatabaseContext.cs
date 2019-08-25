@@ -10,5 +10,7 @@ namespace mis.Models
         public DbSet<Departments>Departments{get; set;}
         public DbSet<Employees>Employees{get; set;}
          public DbSet<Users>Users{get; set;}
+         public DbSet<Customers>Customers{get; set;}
+         public DbSet<Meetings>Meetings{get; set;}
     }
 }
