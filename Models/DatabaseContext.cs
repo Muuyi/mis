@@ -12,5 +12,6 @@ namespace mis.Models
          public DbSet<Users>Users{get; set;}
          public DbSet<Customers>Customers{get; set;}
          public DbSet<Meetings>Meetings{get; set;}
+         public DbSet<Tasks>Tasks{get; set;}
     }
 }
