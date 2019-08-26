@@ -7,11 +7,23 @@ namespace mis.Models
         public DatabaseContext(DbContextOptions<DatabaseContext> options) :base (options){
 
         }
+        //DEPARTMENTS CONTEXT
         public DbSet<Departments>Departments{get; set;}
+        //EMPLOYEES CONTEXT
         public DbSet<Employees>Employees{get; set;}
-         public DbSet<Users>Users{get; set;}
-         public DbSet<Customers>Customers{get; set;}
-         public DbSet<Meetings>Meetings{get; set;}
-         public DbSet<Tasks>Tasks{get; set;}
+        //USERS CONTEXT
+        public DbSet<Users>Users{get; set;}
+        //CUSTOMERS CONTEXT
+        public DbSet<Customers>Customers{get; set;}
+        //MEETINGS CONTEXT
+        public DbSet<Meetings>Meetings{get; set;}
+        //TASKS CONTEXT
+        public DbSet<Tasks>Tasks{get; set;}
+        //PROJECTS CONTEXT
+        public DbSet<Projects>Projects{get; set;}
+        //TICKETS CONTEXT
+        public DbSet<Tickets>Tickets{get; set;}
+        //LEAVE CONTEXT
+        public DbSet<Leave>Leave{get; set;}
     }
 }
