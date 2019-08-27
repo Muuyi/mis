@@ -8,8 +8,8 @@ namespace mis.Controllers
     [ApiController]
     public class DepartmentsController : ControllerBase
     {
-      private readonly DatabaseContext _context;
-      public DepartmentsController(DatabaseContext context) => _context = context;
+      private readonly AuthenticationContext _context;
+      public DepartmentsController(AuthenticationContext context) => _context = context;
       //GET             api/departments
       [HttpGet]
       public ActionResult<IEnumerable<Departments>> GetDepartments()

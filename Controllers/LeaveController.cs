@@ -8,8 +8,8 @@ namespace mis.Controllers
     [ApiController]
     public class LeaveController : ControllerBase
     {
-      private readonly DatabaseContext _context;
-      public LeaveController(DatabaseContext context) => _context = context;
+      private readonly AuthenticationContext _context;
+      public LeaveController(AuthenticationContext context) => _context = context;
       //GET             api/customers
       [HttpGet]
       public ActionResult<IEnumerable<Leave>> GetRecords()

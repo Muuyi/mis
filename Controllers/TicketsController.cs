@@ -8,8 +8,8 @@ namespace mis.Controllers
     [ApiController]
     public class TicketsController : ControllerBase
     {
-      private readonly DatabaseContext _context;
-      public TicketsController(DatabaseContext context) => _context = context;
+      private readonly AuthenticationContext _context;
+      public TicketsController(AuthenticationContext context) => _context = context;
       //GET             api/customers
       [HttpGet]
       public ActionResult<IEnumerable<Tickets>> GetRecords()

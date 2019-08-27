@@ -12,6 +12,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
+using System.Text;
 using mis.Models;
 
 namespace mis
@@ -29,7 +33,18 @@ namespace mis
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //DATABASE CONNECTION
-            services.AddDbContext<DatabaseContext>(options => options.UseMySql("server=localhost;port=3306;database=mis;user=root;password="));
+            // services.AddDbContext<DatabaseContext>(options => options.UseMySql("server=localhost;port=3306;database=mis;user=root;password="));
+            services.AddDbContext<AuthenticationContext>(options => options.UseMySql("server=localhost;port=3306;database=mis;user=root;password="));
+            //ADD IDENTITY USER
+            services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<AuthenticationContext>();
+            //APPLICATION USER
+            services.Configure<IdentityOptions>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 4; 
+            });
             //ENABLING CORS-CROSS ORIGIN RESOURCE SHARING
             services.AddCors(options =>
             {
@@ -37,6 +52,25 @@ namespace mis
                 {
                     builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
                 });
+            });
+            //Authentication key
+            var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
+            //ADD JWT AUTHENTICATION
+            services.AddAuthentication(x=>{
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                // .AuthenticationScheme;
+            }).AddJwtBearer(x => {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = false;
+                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters{
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
             });
 
         }
@@ -53,6 +87,8 @@ namespace mis
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            //USE AUTHENTICATION
+            app.UseAuthentication();
             // app.UseCors(options => options.WithOrigins("http://localhost:4200"));
             app.UseCors("AllowAll");
             app.UseHttpsRedirection();

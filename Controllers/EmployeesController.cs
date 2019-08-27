@@ -8,8 +8,8 @@ namespace mis.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-      private readonly DatabaseContext _context;
-      public EmployeesController(DatabaseContext context) => _context = context;
+      private readonly AuthenticationContext _context;
+      public EmployeesController(AuthenticationContext context) => _context = context;
       //GET             api/departments
       [HttpGet]
       public ActionResult<IEnumerable<Employees>> GetEmployees()

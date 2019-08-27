@@ -8,8 +8,8 @@ namespace mis.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-      private readonly DatabaseContext _context;
-      public TasksController(DatabaseContext context) => _context = context;
+      private readonly AuthenticationContext _context;
+      public TasksController(AuthenticationContext context) => _context = context;
       //GET             api/customers
       [HttpGet]
       public ActionResult<IEnumerable<Tasks>> GetRecords()
