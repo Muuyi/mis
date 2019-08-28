@@ -13,7 +13,7 @@ namespace mis.Models
             
         }
          //USERS CONTEXT
-        public DbSet<ApplicationUser>ApplicationUser{get; set;}
+        public DbSet<ApplicationUser>ApplicationUsers{get; set;}
         //DEPARTMENTS
         public DbSet<Departments>Departments{get; set;}
         //UUSERS

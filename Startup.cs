@@ -31,6 +31,9 @@ namespace mis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //INJECT APP SETTINGS
+            services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+            //COMPATIBILTY
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //DATABASE CONNECTION
             // services.AddDbContext<DatabaseContext>(options => options.UseMySql("server=localhost;port=3306;database=mis;user=root;password="));
@@ -78,6 +81,12 @@ namespace mis
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.Use(async (ctx,next)=>{
+                await next();
+                if(ctx.Response.StatusCode == 204){
+                    ctx.Response.ContentLength = 0;
+                }
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
