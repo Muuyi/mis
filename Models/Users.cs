@@ -1,6 +1,6 @@
 namespace mis.Models
 {
-    public class Users : Base
+    public class Administrators : Base
     {
        public string Username { get; set; } 
        public string Password { get; set; }
