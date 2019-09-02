@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mis.Models;
 
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20190902065401_UpdateTasksProgress")]
+    partial class UpdateTasksProgress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -317,24 +319,6 @@ namespace mis.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("mis.Models.ProjectsProgress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Comments");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("Metric");
-
-                    b.Property<int>("ProjectsId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProjectsProgress");
-                });
-
             modelBuilder.Entity("mis.Models.Tasks", b =>
                 {
                     b.Property<int>("Id")
@@ -389,24 +373,6 @@ namespace mis.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("mis.Models.TicketsProgress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Comments");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("Status");
-
-                    b.Property<int>("TicketsId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TicketsProgress");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

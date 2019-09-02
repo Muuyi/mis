@@ -61,6 +61,11 @@ namespace mis.Controllers
             _context.SaveChanges();
             return record;
         }
+      [HttpGet("[action]")]
+      public string SayHello() 
+      {
+          return "Hello world!!!";
+      }
         //USER AUTHENTICATION
         // [HttpPost]
         // [Route("Login")]

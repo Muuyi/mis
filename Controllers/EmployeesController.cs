@@ -14,6 +14,7 @@ namespace mis.Controllers
       [HttpGet]
       public ActionResult<IEnumerable<Employees>> GetEmployees()
       {
+        //   var employees = _context.Employees.Include(employees => employees.Departments).ToList();
           return _context.Employees;
       } 
       //GET INDIVIDUAL CLIENTS      api/departments/id

@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Text;
 using mis.Models;
 
@@ -41,13 +41,13 @@ namespace mis
             //ADD IDENTITY USER
             services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<AuthenticationContext>();
             //APPLICATION USER
-            services.Configure<IdentityOptions>(options => {
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 4; 
-            });
+            // services.Configure<IdentityOptions>(options => {
+            //     options.Password.RequireDigit = false;
+            //     options.Password.RequireNonAlphanumeric = false;
+            //     options.Password.RequireLowercase = false;
+            //     options.Password.RequireUppercase = false;
+            //     options.Password.RequiredLength = 4; 
+            // });
             //ENABLING CORS-CROSS ORIGIN RESOURCE SHARING
             services.AddCors(options =>
             {
@@ -101,7 +101,14 @@ namespace mis
             // app.UseCors(options => options.WithOrigins("http://localhost:4200"));
             app.UseCors("AllowAll");
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
         }
     }
 }
