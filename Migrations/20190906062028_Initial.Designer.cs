@@ -9,8 +9,8 @@ using mis.Models;
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190902080411_AddProgresses")]
-    partial class AddProgresses
+    [Migration("20190906062028_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -221,26 +221,22 @@ namespace mis.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("mis.Models.Departments", b =>
+            modelBuilder.Entity("mis.Models.Department", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("DepartmentName");
 
-                    b.HasKey("Id");
+                    b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("mis.Models.Employees", b =>
+            modelBuilder.Entity("mis.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<int>("DepartmentId");
 
@@ -256,7 +252,9 @@ namespace mis.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.HasKey("Id");
+                    b.HasKey("EmployeeId");
+
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Employees");
                 });
@@ -453,6 +451,14 @@ namespace mis.Migrations
                     b.HasOne("mis.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("mis.Models.Employee", b =>
+                {
+                    b.HasOne("mis.Models.Department", "Department")
+                        .WithMany("Employees")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

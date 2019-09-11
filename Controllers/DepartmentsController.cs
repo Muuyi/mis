@@ -12,13 +12,13 @@ namespace mis.Controllers
       public DepartmentsController(AuthenticationContext context) => _context = context;
       //GET             api/departments
       [HttpGet]
-      public ActionResult<IEnumerable<Departments>> GetDepartments()
+      public ActionResult<IEnumerable<Department>> GetDepartments()
       {
           return _context.Departments;
       } 
       //GET INDIVIDUAL CLIENTS      api/departments/id
       [HttpGet("{id}")] 
-      public ActionResult<Departments> GetIndividualClient(int id)
+      public ActionResult<Department> GetIndividualClient(int id)
       {
           var department = _context.Departments.Find(id);
           if(department == null)
@@ -29,17 +29,17 @@ namespace mis.Controllers
       }
         //POST DEPARTMENTS             api/departments
         [HttpPost]
-        public ActionResult<IEnumerable<Departments>> PostDepartments(Departments department)
+        public ActionResult<IEnumerable<Department>> PostDepartments(Department department)
         {
             _context.Departments.Add(department);
             _context.SaveChanges();
-            return CreatedAtAction("GetDepartments", new Departments{Id=department.Id},department);
+            return CreatedAtAction("GetDepartments", new Department{DepartmentId=department.DepartmentId},department);
         }
         //PUT DEPARTMENTS       api/departments/id
         [HttpPut("{id}")]
-        public ActionResult PutDepartment(int id, Departments department)
+        public ActionResult PutDepartment(int id, Department department)
         {
-            if(id != department.Id)
+            if(id != department.DepartmentId)
             {
                 return BadRequest();
             }
@@ -49,7 +49,7 @@ namespace mis.Controllers
         }
         //DELETE DEPARTMENTS        api/departments/id
         [HttpDelete("{id}")]
-        public ActionResult<Departments> DeleteDepartments(int id)
+        public ActionResult<Department> DeleteDepartments(int id)
         {
             var department = _context.Departments.Find(id);
             if(department == null)

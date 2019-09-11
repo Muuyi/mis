@@ -17,11 +17,11 @@ namespace mis.Controllers
     [ApiController]
     public class ApplicationUserController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        // [HttpGet]
+        // public ActionResult<IEnumerable<Administrators>> GetRecords()
+        // {
+        //     return _context.Administrators;
+        // } 
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationSettings _appSettings;

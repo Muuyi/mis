@@ -9,8 +9,8 @@ using mis.Models;
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190829022012_UpdateAdministrators")]
-    partial class UpdateAdministrators
+    [Migration("20190911061003_UpdateDepartments")]
+    partial class UpdateDepartments
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,61 +59,6 @@ namespace mis.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -203,6 +148,59 @@ namespace mis.Migrations
                     b.ToTable("Administrators");
                 });
 
+            modelBuilder.Entity("mis.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("mis.Models.Customers", b =>
                 {
                     b.Property<int>("Id")
@@ -223,26 +221,22 @@ namespace mis.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("mis.Models.Departments", b =>
+            modelBuilder.Entity("mis.Models.Department", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("DepartmentName");
 
-                    b.HasKey("Id");
+                    b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("mis.Models.Employees", b =>
+            modelBuilder.Entity("mis.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<int>("DepartmentId");
 
@@ -258,7 +252,9 @@ namespace mis.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.HasKey("Id");
+                    b.HasKey("EmployeeId");
+
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Employees");
                 });
@@ -321,6 +317,24 @@ namespace mis.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("mis.Models.ProjectsProgress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comments");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Metric");
+
+                    b.Property<int>("ProjectsId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectsProgress");
+                });
+
             modelBuilder.Entity("mis.Models.Tasks", b =>
                 {
                     b.Property<int>("Id")
@@ -343,6 +357,26 @@ namespace mis.Migrations
                     b.ToTable("Tasks");
                 });
 
+            modelBuilder.Entity("mis.Models.TasksProgress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comments");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Metric");
+
+                    b.Property<string>("Status");
+
+                    b.Property<int>("TasksId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TasksProgress");
+                });
+
             modelBuilder.Entity("mis.Models.Tickets", b =>
                 {
                     b.Property<int>("Id")
@@ -357,14 +391,22 @@ namespace mis.Migrations
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("mis.Models.ApplicationUser", b =>
+            modelBuilder.Entity("mis.Models.TicketsProgress", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(150)");
+                    b.Property<string>("Comments");
 
-                    b.HasDiscriminator().HasValue("ApplicationUser");
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Status");
+
+                    b.Property<int>("TicketsId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TicketsProgress");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -377,7 +419,7 @@ namespace mis.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("mis.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -385,7 +427,7 @@ namespace mis.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("mis.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -398,7 +440,7 @@ namespace mis.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("mis.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -406,9 +448,17 @@ namespace mis.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("mis.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("mis.Models.Employee", b =>
+                {
+                    b.HasOne("mis.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

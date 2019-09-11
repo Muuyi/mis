@@ -2,7 +2,7 @@
 
 namespace mis.Migrations
 {
-    public partial class AddTasksProgress : Migration
+    public partial class UpdateDepartments : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

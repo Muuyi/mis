@@ -15,11 +15,11 @@ namespace mis.Models
          //USERS CONTEXT
         public DbSet<ApplicationUser>ApplicationUser{get; set;}
         //DEPARTMENTS
-        public DbSet<Departments>Departments{get; set;}
+        public DbSet<Department>Departments{get; set;}
         //UUSERS
          public DbSet<Administrators>Administrators{get; set;}
         //EMPLOYEES CONTEXT
-        public DbSet<Employees>Employees{get; set;}
+        public DbSet<Employee>Employees{get; set;}
         // //CUSTOMERS CONTEXT
         public DbSet<Customers>Customers{get; set;}
         // //MEETINGS CONTEXT
