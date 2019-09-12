@@ -9,8 +9,8 @@ using mis.Models;
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190906062028_Initial")]
-    partial class Initial
+    [Migration("20190912134251_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -158,6 +158,8 @@ namespace mis.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<int>("DepartmentId");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -190,6 +192,8 @@ namespace mis.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -454,10 +458,18 @@ namespace mis.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("mis.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("mis.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("mis.Models.Employee", b =>
                 {
                     b.HasOne("mis.Models.Department", "Department")
-                        .WithMany("Employees")
+                        .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

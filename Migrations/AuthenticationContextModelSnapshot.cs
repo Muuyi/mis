@@ -156,6 +156,8 @@ namespace mis.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<int>("DepartmentId");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -188,6 +190,8 @@ namespace mis.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -449,6 +453,14 @@ namespace mis.Migrations
                     b.HasOne("mis.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("mis.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("mis.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

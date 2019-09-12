@@ -7,5 +7,7 @@ namespace mis.Models
     {
         [Column(TypeName="nvarchar(150)")]
         public string FullName { get; set; }
+        public int DepartmentId {get; set;}
+        public Department Department {get;set;}
     }
 }

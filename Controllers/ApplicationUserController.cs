@@ -39,8 +39,9 @@ namespace mis.Controllers
             var applicationUser = new ApplicationUser(){
                 UserName = model.UserName,
                 Email = model.Email,
-                FullName = model.FullName
-
+                FullName = model.FullName,
+                PhoneNumber = model.PhoneNumber,
+                DepartmentId = model.DepartmentId
             };
             try
             {
