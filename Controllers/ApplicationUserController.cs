@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using System.Text;
+using Newtonsoft.Json;
 using mis.Models;
 namespace mis.Controllers
 {
@@ -30,7 +32,13 @@ namespace mis.Controllers
             _signInManager = signInManager;
             _appSettings = appSettings.Value;
         }
-        
+        // private readonly AuthenticationContext _context;
+        // public ApplicationUserController (AuthenticationContext context) => _context = context;
+        // [HttpGet]
+        // public JsonResult GetAllUsers(){
+        //     var users=  _context.ApplicationUser.Include(c => c.Department).ToList();
+        //     return  Json(users);
+        // }
         //POST METHOD
         [HttpPost]
         [Route("Register")]
