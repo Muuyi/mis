@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mis.Models;
 
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20190916141922_UpdateProjects")]
+    partial class UpdateProjects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,7 +308,9 @@ namespace mis.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<int?>("EmployeeId");
+
+                    b.Property<int>("EmployeesId");
 
                     b.Property<DateTime>("EndDate");
 
@@ -482,8 +486,7 @@ namespace mis.Migrations
                 {
                     b.HasOne("mis.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("mis.Models.Tasks", b =>
