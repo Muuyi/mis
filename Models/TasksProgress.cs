@@ -7,5 +7,6 @@ namespace mis.Models
         public string Status { get; set; }
         public string Metric { get; set; }
         public int TasksId { get; set; }
+        public Tasks Tasks {get; set; }
     }
 }

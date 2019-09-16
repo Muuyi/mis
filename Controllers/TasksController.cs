@@ -1,21 +1,35 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using mis.Models;
+// using System.Collections.Generic;
+// using Microsoft.AspNetCore.Mvc;
+// using System.Linq;
+// using System.Threading.Tasks;
+// using Microsoft.EntityFrameworkCore;
+// using Newtonsoft.Json;
+// using mis.Models;
 namespace mis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TasksController : ControllerBase
+    public class TasksController : Controller
     {
       private readonly AuthenticationContext _context;
       public TasksController(AuthenticationContext context) => _context = context;
       //GET             api/customers
       [HttpGet]
-      public ActionResult<IEnumerable<Tasks>> GetRecords()
-      {
-          return _context.Tasks;
-      } 
+      public JsonResult GetAllTasks(){
+        var tasks=  _context.Tasks.Include(c => c.Employee).ToList();
+        return Json(tasks);
+        }
+    //   public ActionResult<IEnumerable<Tasks>> GetRecords()
+    //   {
+    //       return _context.Tasks;
+    //   } 
       //GET INDIVIDUAL CLIENTS      api/customers/id
       [HttpGet("{id}")] 
       public ActionResult<Tasks> GetIndividualRecord(int id)

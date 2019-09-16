@@ -9,8 +9,8 @@ using mis.Models;
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190912134251_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20190916084846_InitialMigrations")]
+    partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -348,7 +348,7 @@ namespace mis.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<int>("EmployeesId");
+                    b.Property<int>("EmployeeId");
 
                     b.Property<DateTime>("EndDate");
 
@@ -357,6 +357,8 @@ namespace mis.Migrations
                     b.Property<string>("TaskSubject");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Tasks");
                 });
@@ -471,6 +473,14 @@ namespace mis.Migrations
                     b.HasOne("mis.Models.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("mis.Models.Tasks", b =>
+                {
+                    b.HasOne("mis.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

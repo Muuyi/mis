@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using mis.Models;
@@ -6,16 +7,20 @@ namespace mis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TasksProgressController : ControllerBase
+    public class TasksProgressController : Controller
     {
       private readonly AuthenticationContext _context;
       public TasksProgressController(AuthenticationContext context) => _context = context;
       //GET             api/customers
       [HttpGet]
-      public ActionResult<IEnumerable<TasksProgress>> GetRecords()
-      {
-          return _context.TasksProgress;
-      } 
+      public JsonResult GetAllTasksProgress(){
+        var tasks=  _context.TasksProgress.Include(c => c.Tasks).ToList();
+        return Json(tasks);
+        }
+    //   public ActionResult<IEnumerable<TasksProgress>> GetRecords()
+    //   {
+    //       return _context.TasksProgress;
+    //   } 
       //GET INDIVIDUAL CLIENTS      api/customers/id
       [HttpGet("{id}")] 
       public ActionResult<TasksProgress> GetIndividualRecord(int id)
