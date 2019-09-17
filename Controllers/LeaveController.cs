@@ -1,21 +1,26 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using mis.Models;
 namespace mis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LeaveController : ControllerBase
+    public class LeaveController : Controller
     {
       private readonly AuthenticationContext _context;
       public LeaveController(AuthenticationContext context) => _context = context;
       //GET             api/customers
       [HttpGet]
-      public ActionResult<IEnumerable<Leave>> GetRecords()
-      {
-          return _context.Leave;
-      } 
+      public JsonResult GetAllLeaveList(){
+            var leave =  _context.Leave.Include(c => c.Employee).ToList();
+            return  Json(leave);
+        }
+    //   public ActionResult<IEnumerable<Leave>> GetRecords()
+    //   {
+    //       return _context.Leave;
+    //   } 
       //GET INDIVIDUAL CLIENTS      api/customers/id
       [HttpGet("{id}")] 
       public ActionResult<Leave> GetIndividualRecord(int id)

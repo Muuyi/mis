@@ -6,5 +6,6 @@ namespace mis.Models
         public string Comments { get; set; }
         public string Status { get; set; }
         public int TicketsId { get; set; }
+        public Tickets Tickets { get; set; }
     }
 }

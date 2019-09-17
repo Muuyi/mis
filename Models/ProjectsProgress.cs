@@ -6,5 +6,6 @@ namespace mis.Models
         public string Comments { get; set; }
         public string Metric { get; set; }
         public int ProjectsId { get; set; }
+        public Projects Projects {get; set;}
     }
 }

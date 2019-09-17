@@ -1,21 +1,26 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using mis.Models;
 namespace mis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TicketsProgressController : ControllerBase
+    public class TicketsProgressController : Controller
     {
       private readonly AuthenticationContext _context;
       public TicketsProgressController(AuthenticationContext context) => _context = context;
       //GET             api/customers
       [HttpGet]
-      public ActionResult<IEnumerable<TicketsProgress>> GetRecords()
-      {
-          return _context.TicketsProgress;
-      } 
+      public JsonResult GetTicketsProgress(){
+        var tickets =  _context.TicketsProgress.Include(c => c.Tickets).ThenInclude(e=>e.Employee).ToList();
+        return  Json(tickets);
+    }
+    //   public ActionResult<IEnumerable<TicketsProgress>> GetRecords()
+    //   {
+    //       return _context.TicketsProgress;
+    //   } 
       //GET INDIVIDUAL CLIENTS      api/customers/id
       [HttpGet("{id}")] 
       public ActionResult<TicketsProgress> GetIndividualRecord(int id)

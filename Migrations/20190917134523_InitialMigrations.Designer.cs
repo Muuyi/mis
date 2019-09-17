@@ -9,8 +9,8 @@ using mis.Models;
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190916142700_UPdateProjectsEmployee")]
-    partial class UPdateProjectsEmployee
+    [Migration("20190917134523_InitialMigrations")]
+    partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -270,7 +270,7 @@ namespace mis.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int>("EmployeesId");
+                    b.Property<int>("EmployeeId");
 
                     b.Property<DateTime>("EndDate");
 
@@ -279,6 +279,8 @@ namespace mis.Migrations
                     b.Property<DateTime>("StartDate");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Leave");
                 });
@@ -338,6 +340,8 @@ namespace mis.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProjectsId");
+
                     b.ToTable("ProjectsProgress");
                 });
 
@@ -394,9 +398,11 @@ namespace mis.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int>("EmployeesId");
+                    b.Property<int>("EmployeeId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Tickets");
                 });
@@ -415,6 +421,8 @@ namespace mis.Migrations
                     b.Property<int>("TicketsId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TicketsId");
 
                     b.ToTable("TicketsProgress");
                 });
@@ -480,11 +488,27 @@ namespace mis.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("mis.Models.Leave", b =>
+                {
+                    b.HasOne("mis.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("mis.Models.Projects", b =>
                 {
                     b.HasOne("mis.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("mis.Models.ProjectsProgress", b =>
+                {
+                    b.HasOne("mis.Models.Projects", "Projects")
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -501,6 +525,22 @@ namespace mis.Migrations
                     b.HasOne("mis.Models.Tasks", "Tasks")
                         .WithMany()
                         .HasForeignKey("TasksId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("mis.Models.Tickets", b =>
+                {
+                    b.HasOne("mis.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("mis.Models.TicketsProgress", b =>
+                {
+                    b.HasOne("mis.Models.Tickets", "Tickets")
+                        .WithMany()
+                        .HasForeignKey("TicketsId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
