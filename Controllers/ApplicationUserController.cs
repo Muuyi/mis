@@ -17,7 +17,7 @@ namespace mis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationUserController : ControllerBase
+    public class ApplicationUserController : Controller
     {
         // [HttpGet]
         // public ActionResult<IEnumerable<Administrators>> GetRecords()
@@ -27,18 +27,20 @@ namespace mis.Controllers
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationSettings _appSettings;
-        public ApplicationUserController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,IOptions<ApplicationSettings> appSettings){
+        private readonly AuthenticationContext _context;
+        public ApplicationUserController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,IOptions<ApplicationSettings> appSettings,AuthenticationContext context){
             _userManager = userManager;
             _signInManager = signInManager;
             _appSettings = appSettings.Value;
+            _context = context;
         }
-        // private readonly AuthenticationContext _context;
-        // public ApplicationUserController (AuthenticationContext context) => _context = context;
-        // [HttpGet]
-        // public JsonResult GetAllUsers(){
-        //     var users=  _context.ApplicationUser.Include(c => c.Department).ToList();
-        //     return  Json(users);
-        // }
+       
+        // public ApplicationUserController () => ;
+        [HttpGet]
+        public JsonResult GetAllUsers(){
+            var users=  _context.ApplicationUser.Include(c => c.Department).ToList();
+            return  Json(users);
+        }
         //POST METHOD
         [HttpPost]
         [Route("Register")]

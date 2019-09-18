@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mis.Models;
 
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20190918071111_LeaveHolders")]
+    partial class LeaveHolders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -301,28 +303,6 @@ namespace mis.Migrations
                     b.ToTable("LeaveHolder");
                 });
 
-            modelBuilder.Entity("mis.Models.MeetingAttendance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<int>("EmployeeId");
-
-                    b.Property<int>("MeetingsId");
-
-                    b.Property<bool>("Status");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("MeetingsId");
-
-                    b.ToTable("MeetingAttendance");
-                });
-
             modelBuilder.Entity("mis.Models.Meetings", b =>
                 {
                     b.Property<int>("Id")
@@ -544,19 +524,6 @@ namespace mis.Migrations
                     b.HasOne("mis.Models.Leave", "Leave")
                         .WithMany()
                         .HasForeignKey("LeaveId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("mis.Models.MeetingAttendance", b =>
-                {
-                    b.HasOne("mis.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("mis.Models.Meetings", "Meetings")
-                        .WithMany()
-                        .HasForeignKey("MeetingsId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

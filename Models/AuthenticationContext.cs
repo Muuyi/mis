@@ -38,5 +38,8 @@ namespace mis.Models
         public DbSet<TicketsProgress>TicketsProgress{get; set;}
         // //LEAVE CONTEXT
         public DbSet<Leave>Leave{get; set;}
+        public DbSet<LeaveHolder>LeaveHolder{get;set;}
+        // Meetings ATTENDANCE
+        public DbSet<MeetingAttendance>MeetingAttendance{get;set;}
     }
 }
