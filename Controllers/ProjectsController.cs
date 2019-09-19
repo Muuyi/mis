@@ -14,7 +14,7 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
        public JsonResult GetAllProjects(){
-            var projects =  _context.Projects.Include(c => c.Employee).ToList();
+            var projects =  _context.Projects.Include(c => c.ApplicationUser).ToList();
             return  Json(projects);
         }
     //   public ActionResult<IEnumerable<Projects>> GetRecords()

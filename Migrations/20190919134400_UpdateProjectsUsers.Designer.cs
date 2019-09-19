@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mis.Models;
 
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20190919134400_UpdateProjectsUsers")]
+    partial class UpdateProjectsUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -436,13 +438,13 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("EmployeeId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Tickets");
                 });
@@ -594,9 +596,10 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.Tickets", b =>
                 {
-                    b.HasOne("mis.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("mis.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("mis.Models.TicketsProgress", b =>

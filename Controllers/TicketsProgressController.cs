@@ -14,7 +14,7 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
       public JsonResult GetTicketsProgress(){
-        var tickets =  _context.TicketsProgress.Include(c => c.Tickets).ThenInclude(e=>e.Employee).ToList();
+        var tickets =  _context.TicketsProgress.Include(c => c.Tickets).ThenInclude(e=>e.ApplicationUser).ToList();
         return  Json(tickets);
     }
     //   public ActionResult<IEnumerable<TicketsProgress>> GetRecords()

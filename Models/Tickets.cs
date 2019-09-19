@@ -3,7 +3,7 @@ namespace mis.Models
 {
     public class Tickets : Base
     {
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

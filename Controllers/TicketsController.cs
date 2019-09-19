@@ -14,7 +14,7 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
       public JsonResult GetTicket(){
-            var tickets =  _context.Tickets.Include(c => c.Employee).ToList();
+            var tickets =  _context.Tickets.Include(c => c.ApplicationUser).ToList();
             return  Json(tickets);
         }
     //   public ActionResult<IEnumerable<Tickets>> GetRecords()

@@ -23,7 +23,7 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
       public JsonResult GetAllTasks(){
-        var tasks=  _context.Tasks.Include(c => c.Employee).ToList();
+        var tasks=  _context.Tasks.Include(c => c.ApplicationUser).ToList();
         return Json(tasks);
         }
     //   public ActionResult<IEnumerable<Tasks>> GetRecords()
