@@ -41,5 +41,6 @@ namespace mis.Models
         public DbSet<LeaveHolder>LeaveHolder{get;set;}
         // Meetings ATTENDANCE
         public DbSet<MeetingAttendance>MeetingAttendance{get;set;}
+        public DbSet<MeetingProgress>MeetingProgress{get;set;}
     }
 }

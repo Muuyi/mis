@@ -9,8 +9,8 @@ using mis.Models;
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190919112059_UpdateTasks2")]
-    partial class UpdateTasks2
+    [Migration("20190920095949_TYpesLeave")]
+    partial class TYpesLeave
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -268,17 +268,19 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<string>("ApplicationUserId");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime>("EndDate");
 
                     b.Property<DateTime>("StartDate");
 
+                    b.Property<string>("Type");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Leave");
                 });
@@ -288,15 +290,15 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<string>("ApplicationUserId");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<int>("LeaveId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("LeaveId");
 
@@ -350,9 +352,9 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<string>("ApplicationUserId");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime>("EndDate");
 
@@ -362,7 +364,7 @@ namespace mis.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Projects");
                 });
@@ -438,13 +440,13 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<string>("ApplicationUserId");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Tickets");
                 });
@@ -532,18 +534,16 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.Leave", b =>
                 {
-                    b.HasOne("mis.Models.Employee", "Employee")
+                    b.HasOne("mis.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("mis.Models.LeaveHolder", b =>
                 {
-                    b.HasOne("mis.Models.Employee", "Employee")
+                    b.HasOne("mis.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("mis.Models.Leave", "Leave")
                         .WithMany()
@@ -566,10 +566,9 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.Projects", b =>
                 {
-                    b.HasOne("mis.Models.Employee", "Employee")
+                    b.HasOne("mis.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("mis.Models.ProjectsProgress", b =>
@@ -597,10 +596,9 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.Tickets", b =>
                 {
-                    b.HasOne("mis.Models.Employee", "Employee")
+                    b.HasOne("mis.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("mis.Models.TicketsProgress", b =>

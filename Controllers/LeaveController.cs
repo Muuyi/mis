@@ -14,7 +14,7 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
       public JsonResult GetAllLeaveList(){
-            var leave =  _context.Leave.Include(c => c.Employee).ToList();
+            var leave =  _context.Leave.Include(c => c.ApplicationUser).ToList();
             return  Json(leave);
         }
     //   public ActionResult<IEnumerable<Leave>> GetRecords()

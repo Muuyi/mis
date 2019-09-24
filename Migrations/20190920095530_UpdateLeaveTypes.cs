@@ -2,7 +2,7 @@
 
 namespace mis.Migrations
 {
-    public partial class MeetingsAttendance : Migration
+    public partial class UpdateLeaveTypes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

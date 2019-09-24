@@ -4,32 +4,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace mis.Migrations
 {
-    public partial class MeetingAttendance : Migration
+    public partial class MeetingProgress : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "MeetingAttendance",
+                name: "MeetingProgress",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     MeetingsId = table.Column<int>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false),
-                    Status = table.Column<bool>(nullable: false)
+                    MeetingStatus = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MeetingAttendance", x => x.Id);
+                    table.PrimaryKey("PK_MeetingProgress", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MeetingAttendance_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MeetingAttendance_Meetings_MeetingsId",
+                        name: "FK_MeetingProgress_Meetings_MeetingsId",
                         column: x => x.MeetingsId,
                         principalTable: "Meetings",
                         principalColumn: "Id",
@@ -37,20 +30,15 @@ namespace mis.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeetingAttendance_EmployeeId",
-                table: "MeetingAttendance",
-                column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MeetingAttendance_MeetingsId",
-                table: "MeetingAttendance",
+                name: "IX_MeetingProgress_MeetingsId",
+                table: "MeetingProgress",
                 column: "MeetingsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MeetingAttendance");
+                name: "MeetingProgress");
         }
     }
 }

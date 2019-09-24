@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace mis.Migrations
 {
-    public partial class InitialMigrations : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,7 +47,7 @@ namespace mis.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Phone = table.Column<int>(nullable: false),
+                    Phone = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -77,7 +77,8 @@ namespace mis.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     Subject = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    MeetingDate = table.Column<DateTime>(nullable: false)
+                    MeetingDate = table.Column<DateTime>(nullable: false),
+                    MeetingTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -255,20 +256,19 @@ namespace mis.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    PlaceholderId = table.Column<int>(nullable: false)
+                    EndDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Leave", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Leave_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Leave_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -281,17 +281,17 @@ namespace mis.Migrations
                     ProjectName = table.Column<string>(nullable: true),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false)
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projects_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Projects_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -305,17 +305,17 @@ namespace mis.Migrations
                     Description = table.Column<string>(nullable: true),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false)
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tasks_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Tasks_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -325,16 +325,71 @@ namespace mis.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false)
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Employees_EmployeeId",
+                        name: "FK_Tickets_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MeetingAttendance",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    MeetingsId = table.Column<int>(nullable: false),
+                    EmployeeId = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeetingAttendance", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MeetingAttendance_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MeetingAttendance_Meetings_MeetingsId",
+                        column: x => x.MeetingsId,
+                        principalTable: "Meetings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LeaveHolder",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    LeaveId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LeaveHolder", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LeaveHolder_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LeaveHolder_Leave_LeaveId",
+                        column: x => x.LeaveId,
+                        principalTable: "Leave",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -453,14 +508,34 @@ namespace mis.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Leave_EmployeeId",
+                name: "IX_Leave_ApplicationUserId",
                 table: "Leave",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveHolder_ApplicationUserId",
+                table: "LeaveHolder",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveHolder_LeaveId",
+                table: "LeaveHolder",
+                column: "LeaveId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MeetingAttendance_EmployeeId",
+                table: "MeetingAttendance",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_EmployeeId",
+                name: "IX_MeetingAttendance_MeetingsId",
+                table: "MeetingAttendance",
+                column: "MeetingsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_ApplicationUserId",
                 table: "Projects",
-                column: "EmployeeId");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectsProgress_ProjectsId",
@@ -468,9 +543,9 @@ namespace mis.Migrations
                 column: "ProjectsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tasks_EmployeeId",
+                name: "IX_Tasks_ApplicationUserId",
                 table: "Tasks",
-                column: "EmployeeId");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TasksProgress_TasksId",
@@ -478,9 +553,9 @@ namespace mis.Migrations
                 column: "TasksId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_EmployeeId",
+                name: "IX_Tickets_ApplicationUserId",
                 table: "Tickets",
-                column: "EmployeeId");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TicketsProgress_TicketsId",
@@ -512,10 +587,10 @@ namespace mis.Migrations
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Leave");
+                name: "LeaveHolder");
 
             migrationBuilder.DropTable(
-                name: "Meetings");
+                name: "MeetingAttendance");
 
             migrationBuilder.DropTable(
                 name: "ProjectsProgress");
@@ -530,7 +605,13 @@ namespace mis.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Leave");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Meetings");
 
             migrationBuilder.DropTable(
                 name: "Projects");
@@ -542,7 +623,7 @@ namespace mis.Migrations
                 name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Departments");

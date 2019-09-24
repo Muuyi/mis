@@ -7,25 +7,21 @@ namespace mis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LeaveHolderController : Controller
+    public class MeetingProgressController : Controller
     {
       private readonly AuthenticationContext _context;
-      public LeaveHolderController(AuthenticationContext context) => _context = context;
+      public MeetingProgressController(AuthenticationContext context) => _context = context;
       //GET             api/customers
       [HttpGet]
-      public JsonResult GetAllLeaveHolderList(){
-            var leave =  _context.LeaveHolder.Include(e=>e.ApplicationUser).Include(c => c.Leave).ThenInclude(e=>e.ApplicationUser).ToList();
-            return  Json(leave);
+      public JsonResult GetAllRecords(){
+        var records=  _context.MeetingProgress.Include(c => c.Meetings).ToList();
+        return Json(records);
         }
-    //   public ActionResult<IEnumerable<Leave>> GetRecords()
-    //   {
-    //       return _context.Leave;
-    //   } 
       //GET INDIVIDUAL CLIENTS      api/customers/id
       [HttpGet("{id}")] 
-      public ActionResult<LeaveHolder> GetIndividualRecord(int id)
+      public ActionResult<MeetingProgress> GetIndividualRecord(int id)
       {
-          var record = _context.LeaveHolder.Find(id);
+          var record = _context.MeetingProgress.Find(id);
           if(record == null)
           {
               return NotFound();
@@ -34,15 +30,15 @@ namespace mis.Controllers
       }
         //POST DEPARTMENTS             api/departments
         [HttpPost]
-        public ActionResult<IEnumerable<LeaveHolder>> PostRecord(LeaveHolder record)
+        public ActionResult<IEnumerable<MeetingProgress>> PostRecord(MeetingProgress record)
         {
-            _context.LeaveHolder.Add(record);
+            _context.MeetingProgress.Add(record);
             _context.SaveChanges();
-            return CreatedAtAction("GetRecords", new LeaveHolder{Id=record.Id},record);
+            return CreatedAtAction("GetRecords", new MeetingProgress{Id=record.Id},record);
         }
         //PUT DEPARTMENTS       api/departments/id
         [HttpPut("{id}")]
-        public ActionResult PutRecord(int id, LeaveHolder record)
+        public ActionResult PutRecord(int id, MeetingProgress record)
         {
             if(id != record.Id)
             {
@@ -54,14 +50,14 @@ namespace mis.Controllers
         }
         //DELETE RECORDS        api/departments/id
         [HttpDelete("{id}")]
-        public ActionResult<LeaveHolder> DeleteRecord(int id)
+        public ActionResult<MeetingProgress> DeleteRecord(int id)
         {
-            var record = _context.LeaveHolder.Find(id);
+            var record = _context.MeetingProgress.Find(id);
             if(record == null)
             {
                 return NotFound();
             }
-            _context.LeaveHolder.Remove(record);
+            _context.MeetingProgress.Remove(record);
             _context.SaveChanges();
             return record;
         }

@@ -266,17 +266,19 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<string>("ApplicationUserId");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime>("EndDate");
 
                     b.Property<DateTime>("StartDate");
 
+                    b.Property<string>("Type");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Leave");
                 });
@@ -286,15 +288,15 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<string>("ApplicationUserId");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<int>("LeaveId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("LeaveId");
 
@@ -321,6 +323,24 @@ namespace mis.Migrations
                     b.HasIndex("MeetingsId");
 
                     b.ToTable("MeetingAttendance");
+                });
+
+            modelBuilder.Entity("mis.Models.MeetingProgress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("MeetingStatus");
+
+                    b.Property<int>("MeetingsId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MeetingsId");
+
+                    b.ToTable("MeetingProgress");
                 });
 
             modelBuilder.Entity("mis.Models.Meetings", b =>
@@ -530,18 +550,16 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.Leave", b =>
                 {
-                    b.HasOne("mis.Models.Employee", "Employee")
+                    b.HasOne("mis.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("mis.Models.LeaveHolder", b =>
                 {
-                    b.HasOne("mis.Models.Employee", "Employee")
+                    b.HasOne("mis.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("mis.Models.Leave", "Leave")
                         .WithMany()
@@ -556,6 +574,14 @@ namespace mis.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("mis.Models.Meetings", "Meetings")
+                        .WithMany()
+                        .HasForeignKey("MeetingsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("mis.Models.MeetingProgress", b =>
+                {
                     b.HasOne("mis.Models.Meetings", "Meetings")
                         .WithMany()
                         .HasForeignKey("MeetingsId")
