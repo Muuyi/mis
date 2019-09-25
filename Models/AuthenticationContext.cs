@@ -42,5 +42,6 @@ namespace mis.Models
         // Meetings ATTENDANCE
         public DbSet<MeetingAttendance>MeetingAttendance{get;set;}
         public DbSet<MeetingProgress>MeetingProgress{get;set;}
+        public DbSet<MeetingsProgressHistory>MeetingsProgressHistory{get;set;}
     }
 }

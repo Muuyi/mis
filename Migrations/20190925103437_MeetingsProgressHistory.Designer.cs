@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mis.Models;
 
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20190925103437_MeetingsProgressHistory")]
+    partial class MeetingsProgressHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -363,24 +365,6 @@ namespace mis.Migrations
                     b.ToTable("Meetings");
                 });
 
-            modelBuilder.Entity("mis.Models.MeetingsProgressHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("MeetingStatus");
-
-                    b.Property<int>("MeetingsId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MeetingsId");
-
-                    b.ToTable("MeetingsProgressHistory");
-                });
-
             modelBuilder.Entity("mis.Models.Projects", b =>
                 {
                     b.Property<int>("Id")
@@ -599,14 +583,6 @@ namespace mis.Migrations
                 });
 
             modelBuilder.Entity("mis.Models.MeetingProgress", b =>
-                {
-                    b.HasOne("mis.Models.Meetings", "Meetings")
-                        .WithMany()
-                        .HasForeignKey("MeetingsId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("mis.Models.MeetingsProgressHistory", b =>
                 {
                     b.HasOne("mis.Models.Meetings", "Meetings")
                         .WithMany()

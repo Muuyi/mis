@@ -6,5 +6,6 @@ namespace mis.Models
        public int MeetingsId {get;set;} 
        public Meetings Meetings {get; set;}
        public string MeetingStatus { get; set; }
+       public string Description { get; set; }
     }
 }
