@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace mis.Models
 {
@@ -10,5 +12,6 @@ namespace mis.Models
         public DateTime MeetingDate { get; set; }
         [DataType(DataType.Time)]
         public DateTime MeetingTime { get; set; }
+        public List<MeetingsProgressHistory> MeetingsProgressHistory {get;set;}
     }
 }

@@ -14,7 +14,7 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
       public JsonResult GetAllRecords(){
-        var records=  _context.MeetingProgress.Include(c => c.Meetings).ToList();
+        var records=  _context.MeetingProgress.Include(c => c.Meetings).ThenInclude(m => m.MeetingsProgressHistory).ToList();
         return Json(records);
         }
       //GET INDIVIDUAL CLIENTS      api/customers/id
@@ -34,7 +34,7 @@ namespace mis.Controllers
         {
             _context.MeetingProgress.Add(record);
             _context.SaveChanges();
-            return CreatedAtAction("GetRecords", new MeetingProgress{Id=record.Id},record);
+            return CreatedAtAction("GetIndividualRecord", new MeetingProgress{Id=record.Id},record);
         }
         //PUT DEPARTMENTS       api/departments/id
         [HttpPut("{id}")]

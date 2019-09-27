@@ -23,7 +23,7 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
       public JsonResult GetAllTasks(){
-        var tasks=  _context.Tasks.Include(c => c.ApplicationUser).ToList();
+        var tasks=  _context.Tasks.Include(c => c.ApplicationUser).Include(t => t.TasksProgress).ToList();
         return Json(tasks);
         }
     //   public ActionResult<IEnumerable<Tasks>> GetRecords()
@@ -47,11 +47,23 @@ namespace mis.Controllers
         {
             _context.Tasks.Add(record);
             _context.SaveChanges();
-            return CreatedAtAction("GetRecords", new Tasks{Id=record.Id},record);
+            return CreatedAtAction("GetIndividualRecord", new Tasks{Id=record.Id},record);
         }
         //PUT DEPARTMENTS       api/departments/id
         [HttpPut("{id}")]
         public ActionResult PutRecord(int id, Tasks record)
+        {
+            if(id != record.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(record).State = EntityState.Modified;
+            _context.SaveChanges();
+            return NoContent();
+        }
+        //PATCH TASKS
+        [HttpPatch("{id}")]
+        public ActionResult PatchRecord(int id, Tasks record)
         {
             if(id != record.Id)
             {

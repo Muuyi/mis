@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mis.Models;
 
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20190927081545_RemoveMeetingsHistory")]
+    partial class RemoveMeetingsHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,8 +444,6 @@ namespace mis.Migrations
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<string>("Status");
-
                     b.Property<string>("TaskSubject");
 
                     b.HasKey("Id");
@@ -458,8 +458,6 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<string>("Comments");
 
                     b.Property<DateTime>("CreatedDate");
@@ -471,8 +469,6 @@ namespace mis.Migrations
                     b.Property<int>("TasksId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("TasksId");
 
@@ -648,11 +644,7 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.TasksProgress", b =>
                 {
-                    b.HasOne("mis.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("mis.Models.Tasks")
+                    b.HasOne("mis.Models.Tasks", "Tasks")
                         .WithMany("TasksProgress")
                         .HasForeignKey("TasksId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -14,15 +14,18 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
       public JsonResult GetAllRecords(){
-        var records=  _context.MeetingsProgressHistory.Include(c => c.Meetings).ToList();
+        var records=  _context.Meetings.Include(m => m.MeetingsProgressHistory).ToList();
+        // var records = _context.Meetings.Include(c => c.MeetingsProgressHistory);
+        // var records = _context.MeetingsProgressHistory.FromSql("SELECT * FROM MeetingsProgressHistory  INNER JOIN Meetings ON MeetingsProgressHistory.MeetingsId = Meetings.id ").ToList();
         return Json(records);
         }
       //GET INDIVIDUAL CLIENTS      api/customers/id
       [HttpGet("{id}")] 
-      // public JsonResult GetIndividualRecords(int id){
-      //   var records=  _context.MeetingsProgressHistory.Find(id).Include(c => c.Meetings).ToList();
-      //   return Json(records);
-      //   }
+      public JsonResult GetIndividualRecords(int id){
+        var records=  _context.Meetings.Where(m=>m.Id == id).Include(c => c.MeetingsProgressHistory).ToList();
+        //  var records = _context.Meetings.FromSql("SELECT * FROM Meetings INNER JOIN MeetingsProgressHistory ON Meetings.id= MeetingsProgressHistory.MeetingsId").ToList();
+        return Json(records);
+        }
     //   public ActionResult<MeetingsProgressHistory> GetIndividualRecord(int id)
     //   {
     //       var record = _context.MeetingsProgressHistory.Find(id);

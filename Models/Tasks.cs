@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 namespace mis.Models
 {
     public class Tasks : Base
@@ -8,7 +9,9 @@ namespace mis.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Metric { get; set; }
+        public string Status { get; set; }
         public string ApplicationUserId {get;set;}
+        public List<TasksProgress>TasksProgress{get;set;}
         public ApplicationUser ApplicationUser {get; set;}
     }
 }

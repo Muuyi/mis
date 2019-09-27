@@ -12,6 +12,12 @@ namespace mis.Models
         {
             
         }
+        // protected override void OnModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     base.OnModelCreating(modelBuilder);
+        //     // modelBuilder.Entity<Meetings>().HasMany(s => s.MeetingsProgressHistory).WithOne(s => s.Meetings);
+        //     modelBuilder.Entity<Tasks>().HasMany(s => s.TasksProgress).WithOne(s => s.Tasks);
+        // }
          //USERS CONTEXT
         public DbSet<ApplicationUser>ApplicationUser{get; set;}
         //DEPARTMENTS

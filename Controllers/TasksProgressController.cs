@@ -14,7 +14,7 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
       public JsonResult GetAllTasksProgress(){
-        var tasks=  _context.TasksProgress.Include(c => c.Tasks).ToList();
+        var tasks=  _context.Tasks.Include(c => c.TasksProgress).ThenInclude(t => t.ApplicationUser).ToList();
         return Json(tasks);
         }
     //   public ActionResult<IEnumerable<TasksProgress>> GetRecords()
@@ -38,7 +38,7 @@ namespace mis.Controllers
         {
             _context.TasksProgress.Add(record);
             _context.SaveChanges();
-            return CreatedAtAction("GetRecords", new TasksProgress{Id=record.Id},record);
+            return CreatedAtAction("GetIndividualRecord", new TasksProgress{Id=record.Id},record);
         }
         //PUT DEPARTMENTS       api/departments/id
         [HttpPut("{id}")]
