@@ -14,7 +14,7 @@ namespace mis.Controllers
       //GET             api/customers
       [HttpGet]
       public JsonResult GetAllProjectsProgress(){
-            var projects =  _context.ProjectsProgress.Include(c => c.Projects).ToList();
+            var projects =  _context.Projects.Include(c => c.ProjectsProgress).ThenInclude(p => p.ApplicationUser).ToList();
             return  Json(projects);
         }
     //   public ActionResult<IEnumerable<ProjectsProgress>> GetRecords()

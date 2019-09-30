@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mis.Models;
 
 namespace mis.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20190930050847_ProjectsMetric")]
+    partial class ProjectsMetric
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,8 +396,6 @@ namespace mis.Migrations
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<string>("Metric");
-
                     b.Property<string>("ProjectName");
 
                     b.Property<DateTime>("StartDate");
@@ -412,8 +412,6 @@ namespace mis.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<string>("Comments");
 
                     b.Property<DateTime>("CreatedDate");
@@ -423,8 +421,6 @@ namespace mis.Migrations
                     b.Property<int>("ProjectsId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ProjectsId");
 
@@ -639,10 +635,6 @@ namespace mis.Migrations
 
             modelBuilder.Entity("mis.Models.ProjectsProgress", b =>
                 {
-                    b.HasOne("mis.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("mis.Models.Projects")
                         .WithMany("ProjectsProgress")
                         .HasForeignKey("ProjectsId")

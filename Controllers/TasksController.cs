@@ -4,7 +4,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.JsonPatch;
 using mis.Models;
+using AutoMapper;
 // using System.Collections.Generic;
 // using Microsoft.AspNetCore.Mvc;
 // using System.Linq;
@@ -19,7 +21,12 @@ namespace mis.Controllers
     public class TasksController : Controller
     {
       private readonly AuthenticationContext _context;
-      public TasksController(AuthenticationContext context) => _context = context;
+      private IMapper _mapper;
+    //   public TasksController(AuthenticationContext context) => _context = context;
+    public TasksController(AuthenticationContext context, IMapper mapper){
+        _context = context;
+        _mapper = mapper;
+    }
       //GET             api/customers
       [HttpGet]
       public JsonResult GetAllTasks(){
@@ -62,17 +69,46 @@ namespace mis.Controllers
             return NoContent();
         }
         //PATCH TASKS
-        [HttpPatch("{id}")]
-        public ActionResult PatchRecord(int id, Tasks record)
-        {
-            if(id != record.Id)
-            {
-                return BadRequest();
-            }
-            _context.Entry(record).State = EntityState.Modified;
-            _context.SaveChanges();
-            return NoContent();
-        }
+        // public async Task<IActionResult> Update(int id, [FromBody] JsonPatchDocument<Tasks> patchModel){
+        // //    var task = await _context.Tasks.SingleOrDefaultAsync(x=>x.Id==id);
+        // var task =  _context.Tasks.Find(id);
+        //    if(patchModel != null){
+        //        patchModel.ApplyTo(task, ModelState);
+        //        if (!ModelState.IsValid)
+        //         {
+        //             return BadRequest(ModelState);
+        //         }
+        //          _context.Entry(task).State = EntityState.Modified;
+        //         await _context.SaveChangesAsync();
+        //         return NoContent();
+        //    }else{
+        //        return BadRequest(ModelState);
+        //    }
+        
+        // var taskToPatch = _mapper.Map<Tasks>(task);
+        //    patchModel.ApplyTo(taskToPatch, ModelState);
+        //    TryValidateModel(taskToPatch);
+        //    if(!ModelState.IsValid){
+        //        return BadRequest(ModelState);
+        //    }
+        //    _mapper.Map(taskToPatch,task);
+
+        //    _context.Entry(task).State = EntityState.Modified;
+        //    await _context.SaveChangesAsync();
+        //    return NoContent();
+
+        // }
+        // public ActionResult PatchRecord(int id)
+        // {
+        //     var record = _context.Tasks.Find(id);
+        //     if(id != record.Id)
+        //     {
+        //         return BadRequest();
+        //     }
+        //     _context.Entry(record).State = EntityState.Modified;
+        //     _context.SaveChanges();
+        //     return NoContent();
+        // }
         //DELETE RECORDS        api/departments/id
         [HttpDelete("{id}")]
         public ActionResult<Tasks> DeleteRecord(int id)

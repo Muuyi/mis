@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Text;
 using mis.Models;
+using AutoMapper;
 
 namespace mis
 {
@@ -31,6 +32,14 @@ namespace mis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+             services.AddAutoMapper(typeof(Startup));
+             //CONFIGURING AUTOMAPPER
+            //  var config = new AutoMapper.MapperConfiguration(cfg =>
+            //     {
+            //         cfg.AddProfile(new OrderDataMappingProfile ());
+            //     });
+            //     var mapper = config.CreateMapper();
+            //     _serviceCollection.AddSingleton(mapper);
             //INJECT APP SETTINGS
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             //COMPATIBILTY
