@@ -38,7 +38,7 @@ namespace mis.Controllers
         {
             _context.LeaveHolder.Add(record);
             _context.SaveChanges();
-            return CreatedAtAction("GetRecords", new LeaveHolder{Id=record.Id},record);
+            return CreatedAtAction("GetAllLeaveHolderList", new LeaveHolder{Id=record.Id},record);
         }
         //PUT DEPARTMENTS       api/departments/id
         [HttpPut("{id}")]
