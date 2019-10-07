@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace mis.Controllers
 {
-    public class RoleController : ApiController
-    {
+    // public class RoleController : ApiController
+    // {
         
-    }
+    // }
 }

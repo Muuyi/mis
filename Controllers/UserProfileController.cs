@@ -30,7 +30,9 @@ namespace mis.Controllers
           {
               user.FullName,
               user.Email,
-              user.UserName
+              user.UserName,
+              user.PhoneNumber,
+              user.DepartmentId
           };
       }  
     }

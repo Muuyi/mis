@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace mis.Models
 {
-    public class AuthenticationContext : IdentityDbContext<ApplicationUser>
+    public class AuthenticationContext : IdentityDbContext<ApplicationUser,ApplicationRole,string>
     {
         public AuthenticationContext(DbContextOptions options): base(options)
         {

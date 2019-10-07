@@ -87,6 +87,11 @@ namespace mis.Controllers
                 return BadRequest(new { message = "Username or Password is incorrect."});
             }
         }
+        //HTTP PATCH METHOD
+        [HttpPatch]
+        public async Task<IActionResult> UpdateUser(){
+            return Ok("Success");
+        }
 
     }
 }
