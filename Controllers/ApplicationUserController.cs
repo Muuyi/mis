@@ -88,10 +88,10 @@ namespace mis.Controllers
             }
         }
         //HTTP PATCH METHOD
-        [HttpPatch]
-        public async Task<IActionResult> UpdateUser(){
-            return Ok("Success");
-        }
+        // [HttpPatch]
+        // public async Task<IActionResult> UpdateUser(){
+        //     return Ok("Success");
+        // }
 
     }
 }

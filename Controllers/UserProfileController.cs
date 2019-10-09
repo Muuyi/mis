@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using mis.Models;
+using System.IO;
+
 namespace mis.Controllers
 {
     [Route("api/[controller]")]
@@ -32,8 +34,21 @@ namespace mis.Controllers
               user.Email,
               user.UserName,
               user.PhoneNumber,
-              user.DepartmentId
+              user.DepartmentId,
+              user.ImageName
           };
-      }  
+      }
+    //   [HttpPut]
+    //   public async Task<IActionResult> UpdateUser(){
+    //       string fileName = null;
+    //       var httpRequest = HttpContext.Current.Request;
+    //       var postedFile = httpRequest.Files["ImageName"];
+    //       fileName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ","-");
+    //       fileName = fileName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.fileName);
+    //       var filePath = HttpContext.Current.Server.MapPath("~/Images/"+fileName);
+    //       postedFile.SaveAs(filePath);
+
+    //       return await "Done";
+    //   }  
     }
 }
