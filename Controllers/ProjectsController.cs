@@ -38,7 +38,7 @@ namespace mis.Controllers
         {
             _context.Projects.Add(record);
             _context.SaveChanges();
-            return CreatedAtAction("GetRecords", new Projects{Id=record.Id},record);
+            return CreatedAtAction("GetAllProjects", new Projects{Id=record.Id},record);
         }
         //PUT DEPARTMENTS       api/departments/id
         [HttpPut("{id}")]
